@@ -1,0 +1,406 @@
+# =============================================================================
+#  Windows 11 — Home Assistant Theme
+#  Fluent Design tokens: Mica/Acrylic translucency, Segoe UI Variable, 8 px radius
+#  Single theme with `modes:` so HA's "Auto" theme mode follows the OS preference.
+# =============================================================================
+
+Windows 11:
+  # ---------------------------------------------------------------------------
+  # 1. Typography — Segoe UI Variable (Win11), graceful fallbacks elsewhere
+  # ---------------------------------------------------------------------------
+  primary-font-family: '"Segoe UI Variable Display", "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif'
+  paper-font-common-base_-_font-family: '"Segoe UI Variable Text", "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif'
+  paper-font-common-code_-_font-family: '"Cascadia Mono", "Cascadia Code", "Consolas", "Courier New", monospace'
+  code-editor-font-family: '"Cascadia Mono", "Cascadia Code", "Consolas", "Courier New", monospace'
+
+  paper-font-body1_-_font-family: 'var(--primary-font-family)'
+  paper-font-subhead_-_font-family: 'var(--primary-font-family)'
+  paper-font-headline_-_font-family: 'var(--primary-font-family)'
+  paper-font-title_-_font-family: 'var(--primary-font-family)'
+  paper-font-caption_-_font-family: 'var(--primary-font-family)'
+  paper-font-display1_-_font-family: 'var(--primary-font-family)'
+  paper-font-display2_-_font-family: 'var(--primary-font-family)'
+  paper-font-display3_-_font-family: 'var(--primary-font-family)'
+  paper-font-display4_-_font-family: 'var(--primary-font-family)'
+
+  # Body / Subtitle weights match Win11 type ramp (Body 400, Subtitle 600)
+  paper-font-body1_-_font-weight: '400'
+  paper-font-body1_-_font-size: '14px'
+  paper-font-body1_-_line-height: '20px'
+  paper-font-subhead_-_font-weight: '600'
+  paper-font-subhead_-_font-size: '14px'
+  paper-font-subhead_-_line-height: '20px'
+  paper-font-headline_-_font-weight: '600'
+  paper-font-headline_-_font-size: '20px'
+  paper-font-headline_-_line-height: '28px'
+  paper-font-title_-_font-weight: '600'
+  paper-font-title_-_font-size: '20px'
+  paper-font-title_-_line-height: '28px'
+
+  # ---------------------------------------------------------------------------
+  # 2. Win11 corner-radius system (8 px overlay / 4 px control)
+  # ---------------------------------------------------------------------------
+  ha-card-border-radius: '8px'
+  mdc-shape-small: '4px'
+  mdc-shape-medium: '8px'
+  mdc-shape-large: '8px'
+  ha-dialog-border-radius: '8px'
+  border-radius-card: '8px'
+  border-radius-button: '4px'
+  border-radius-chip: '4px'
+
+  # ---------------------------------------------------------------------------
+  # 3. Card geometry — thin Win11-style stroke + soft elevation
+  # ---------------------------------------------------------------------------
+  ha-card-border-width: '1px'
+  ha-card-border-color: 'var(--win11-card-stroke)'
+  ha-card-box-shadow: '0 2px 4px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.04)'
+
+  # ---------------------------------------------------------------------------
+  # 4. Sidebar / header sizing tweaks (subtle, not essential to Win11)
+  # ---------------------------------------------------------------------------
+  app-header-background-color: 'var(--primary-background-color)'
+  app-header-text-color: 'var(--primary-text-color)'
+  app-header-border-bottom: '1px solid var(--divider-color)'
+
+  # ---------------------------------------------------------------------------
+  # 5. UIX (UI eXtension) theme injection — gives true Mica/Acrylic blur
+  #    Requires UIX installed (HACS → "UI eXtension"). Without it the rgba
+  #    fallback colors below still produce a faithful Win11 appearance.
+  #    See: https://uix.lf.technology/using/themes/
+  # ---------------------------------------------------------------------------
+  # `uix-theme` MUST exactly match this theme's name (case-sensitive).
+  uix-theme: 'Windows 11'
+
+  # uix-root-yaml — traverses to the <home-assistant> shadow root for the
+  # Mica wallpaper backdrop on the whole app shell.
+  uix-root-yaml: |
+    .: |
+      html {
+        font-family: var(--primary-font-family) !important;
+        font-feature-settings: "ss02", "cv11";
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      /* Mica wallpaper backdrop on the main app shell */
+      home-assistant$ {
+        background:
+          radial-gradient(at 0% 0%, var(--win11-mica-tint-1) 0%, transparent 50%),
+          radial-gradient(at 100% 100%, var(--win11-mica-tint-2) 0%, transparent 50%),
+          var(--primary-background-color) !important;
+      }
+
+  # uix-card — applied to every card's ha-card element. Plain CSS form
+  # (no shadow-DOM traversal needed) is sufficient here.
+  uix-card: |
+    ha-card {
+      backdrop-filter: blur(40px) saturate(125%);
+      -webkit-backdrop-filter: blur(40px) saturate(125%);
+      border: 1px solid var(--win11-card-stroke);
+      transition: background-color 167ms cubic-bezier(0.55, 0.55, 0, 1),
+                  box-shadow    167ms cubic-bezier(0.55, 0.55, 0, 1),
+                  transform     167ms cubic-bezier(0.55, 0.55, 0, 1);
+    }
+    ha-card:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.06);
+    }
+
+  # ---------------------------------------------------------------------------
+  # 6. Light / Dark token sets
+  # ---------------------------------------------------------------------------
+  modes:
+    # =========================================================================
+    #  LIGHT  (Mica Light — #F3F3F3 base, #0078D4 accent)
+    # =========================================================================
+    light:
+      # — Mica gradient tints used by the card-mod root background
+      win11-mica-tint-1: 'rgba(245, 247, 250, 0.85)'
+      win11-mica-tint-2: 'rgba(241, 244, 248, 0.85)'
+      win11-card-stroke: 'rgba(0, 0, 0, 0.0578)'
+      win11-divider:     'rgba(0, 0, 0, 0.0837)'
+      win11-hover:       'rgba(0, 0, 0, 0.0373)'
+      win11-pressed:     'rgba(0, 0, 0, 0.0241)'
+
+      # Brand / accent
+      primary-color: '#0078D4'      # Windows 11 accent (default blue)
+      light-primary-color: '#429CE3'
+      dark-primary-color: '#005A9E'
+      accent-color: '#0078D4'
+      rgb-primary-color: '0, 120, 212'
+      rgb-accent-color: '0, 120, 212'
+
+      # Backgrounds — Mica Light
+      primary-background-color:   '#F3F3F3'
+      secondary-background-color: '#EAEAEA'
+      card-background-color:      'rgba(252, 252, 252, 0.70)'
+      ha-card-background:         'rgba(252, 252, 252, 0.70)'
+      paper-card-background-color:'rgba(252, 252, 252, 0.70)'
+      paper-listbox-background-color: '#FFFFFF'
+      paper-dialog-background-color:  'rgba(249, 249, 249, 0.85)'
+      rgb-primary-background-color:   '243, 243, 243'
+      rgb-secondary-background-color: '234, 234, 234'
+      rgb-card-background-color:      '252, 252, 252'
+
+      # Text — Win11 Fluent text-on-light opacities
+      primary-text-color:    'rgba(0, 0, 0, 0.8956)'   # ~#1A1A1A
+      secondary-text-color:  'rgba(0, 0, 0, 0.6058)'   # ~#5C5C5C
+      text-primary-color:    '#FFFFFF'                 # text on accent fills
+      disabled-text-color:   'rgba(0, 0, 0, 0.3614)'
+      rgb-primary-text-color:   '26, 26, 26'
+      rgb-secondary-text-color: '92, 92, 92'
+
+      # Dividers / lines
+      divider-color: 'rgba(0, 0, 0, 0.0837)'
+      table-row-background-color: '#FFFFFF'
+      table-row-alternative-background-color: '#FAFAFA'
+
+      # Icons
+      state-icon-color:           'rgba(0, 0, 0, 0.6058)'
+      state-icon-active-color:    '#0078D4'
+      state-icon-unavailable-color: 'rgba(0, 0, 0, 0.3614)'
+      paper-item-icon-color:        'rgba(0, 0, 0, 0.6058)'
+      paper-item-icon-active-color: '#0078D4'
+      rgb-state-icon-color:        '92, 92, 92'
+      rgb-state-icon-active-color: '0, 120, 212'
+
+      # Sidebar
+      sidebar-background-color:           'rgba(243, 243, 243, 0.85)'
+      sidebar-icon-color:                 'rgba(0, 0, 0, 0.6058)'
+      sidebar-text-color:                 'rgba(0, 0, 0, 0.8956)'
+      sidebar-selected-background-color:  'rgba(0, 120, 212, 0.10)'
+      sidebar-selected-icon-color:        '#0078D4'
+      sidebar-selected-text-color:        '#0078D4'
+
+      # App header
+      app-header-background-color: 'rgba(243, 243, 243, 0.85)'
+      app-header-text-color:       'rgba(0, 0, 0, 0.8956)'
+      app-header-edit-background-color: '#EAEAEA'
+
+      # Inputs / form fields
+      input-background-color:     '#FFFFFF'
+      input-fill-color:           '#FFFFFF'
+      input-ink-color:            'rgba(0, 0, 0, 0.8956)'
+      input-label-ink-color:      'rgba(0, 0, 0, 0.6058)'
+      input-disabled-fill-color:  '#F5F5F5'
+      input-disabled-ink-color:   'rgba(0, 0, 0, 0.3614)'
+      input-disabled-label-ink-color: 'rgba(0, 0, 0, 0.3614)'
+      input-dropdown-icon-color:  'rgba(0, 0, 0, 0.6058)'
+      input-idle-line-color:      'rgba(0, 0, 0, 0.4458)'
+      input-hover-line-color:     '#0078D4'
+      input-disabled-line-color:  'rgba(0, 0, 0, 0.0837)'
+      input-outlined-idle-border-color:     'rgba(0, 0, 0, 0.4458)'
+      input-outlined-hover-border-color:    '#0078D4'
+      input-outlined-disabled-border-color: 'rgba(0, 0, 0, 0.0837)'
+
+      # Material design (MDC) — buttons, chips, dialogs
+      mdc-theme-primary:    '#0078D4'
+      mdc-theme-secondary:  '#0078D4'
+      mdc-theme-on-primary: '#FFFFFF'
+      mdc-theme-on-secondary: '#FFFFFF'
+      mdc-theme-surface:    'rgba(252, 252, 252, 0.70)'
+      mdc-theme-on-surface: 'rgba(0, 0, 0, 0.8956)'
+      mdc-button-outline-color: 'rgba(0, 0, 0, 0.0837)'
+
+      # Switches — Win11 toggle look
+      switch-checked-color:           '#0078D4'
+      switch-checked-button-color:    '#FFFFFF'
+      switch-checked-track-color:     '#0078D4'
+      switch-unchecked-button-color:  'rgba(0, 0, 0, 0.6058)'
+      switch-unchecked-track-color:   'rgba(0, 0, 0, 0.0578)'
+      paper-toggle-button-checked-button-color: '#FFFFFF'
+      paper-toggle-button-checked-bar-color:    '#0078D4'
+      paper-toggle-button-unchecked-button-color: '#FFFFFF'
+      paper-toggle-button-unchecked-bar-color:    'rgba(0, 0, 0, 0.4458)'
+
+      # Sliders
+      slider-color:                       '#0078D4'
+      slider-bar-color:                   'rgba(0, 0, 0, 0.0837)'
+      paper-slider-knob-color:            '#0078D4'
+      paper-slider-knob-start-color:      '#0078D4'
+      paper-slider-pin-color:             '#0078D4'
+      paper-slider-active-color:          '#0078D4'
+      paper-slider-secondary-color:       'rgba(0, 120, 212, 0.30)'
+      paper-slider-container-color:       'rgba(0, 0, 0, 0.0837)'
+
+      # Tabs
+      paper-tabs-selection-bar-color: '#0078D4'
+
+      # Labels / badges
+      label-badge-background-color: '#FFFFFF'
+      label-badge-text-color:       'rgba(0, 0, 0, 0.8956)'
+      label-badge-red:              '#C42B1C'
+      label-badge-green:            '#0F7B0F'
+      label-badge-blue:             '#0078D4'
+      label-badge-yellow:           '#9D5D00'
+      label-badge-grey:             '#5C5C5C'
+
+      # Status colors (Fluent system fills)
+      warning-color: '#9D5D00'
+      error-color:   '#C42B1C'
+      success-color: '#0F7B0F'
+      info-color:    '#0078D4'
+
+      # Code blocks
+      code-editor-background-color: '#FAFAFA'
+      markdown-code-background-color: '#F5F5F5'
+
+      # Calendar
+      calendar-background-color: 'rgba(252, 252, 252, 0.70)'
+
+      # Energy dashboard
+      energy-grid-consumption-color: '#0078D4'
+      energy-grid-return-color:      '#107C10'
+      energy-solar-color:            '#FCE100'
+      energy-non-fossil-color:       '#10893E'
+      energy-battery-out-color:      '#8764B8'
+      energy-battery-in-color:       '#5C2E91'
+      energy-gas-color:              '#9D5D00'
+      energy-water-color:            '#038387'
+
+    # =========================================================================
+    #  DARK  (Mica Dark — #202020 base, #4CC2FF accent)
+    # =========================================================================
+    dark:
+      # — Mica gradient tints (subtle; sit over the Mica solid)
+      win11-mica-tint-1: 'rgba(45, 45, 50, 0.85)'
+      win11-mica-tint-2: 'rgba(28, 28, 32, 0.85)'
+      win11-card-stroke: 'rgba(255, 255, 255, 0.0931)'
+      win11-divider:     'rgba(255, 255, 255, 0.0837)'
+      win11-hover:       'rgba(255, 255, 255, 0.0605)'
+      win11-pressed:     'rgba(255, 255, 255, 0.0419)'
+
+      # Brand / accent — Win11 dark accent skews lighter for AA contrast
+      primary-color: '#4CC2FF'
+      light-primary-color: '#99EBFF'
+      dark-primary-color: '#0078D4'
+      accent-color: '#4CC2FF'
+      rgb-primary-color: '76, 194, 255'
+      rgb-accent-color: '76, 194, 255'
+
+      # Backgrounds — Mica Dark
+      primary-background-color:   '#202020'
+      secondary-background-color: '#1C1C1C'
+      card-background-color:      'rgba(43, 43, 43, 0.60)'
+      ha-card-background:         'rgba(43, 43, 43, 0.60)'
+      paper-card-background-color:'rgba(43, 43, 43, 0.60)'
+      paper-listbox-background-color: '#2D2D2D'
+      paper-dialog-background-color:  'rgba(44, 44, 44, 0.85)'
+      rgb-primary-background-color:   '32, 32, 32'
+      rgb-secondary-background-color: '28, 28, 28'
+      rgb-card-background-color:      '43, 43, 43'
+
+      # Text — Win11 Fluent text-on-dark opacities
+      primary-text-color:    '#FFFFFF'
+      secondary-text-color:  'rgba(255, 255, 255, 0.7860)'   # ~#C8C8C8
+      text-primary-color:    '#000000'                       # text on accent
+      disabled-text-color:   'rgba(255, 255, 255, 0.3628)'
+      rgb-primary-text-color:   '255, 255, 255'
+      rgb-secondary-text-color: '200, 200, 200'
+
+      # Dividers / lines
+      divider-color: 'rgba(255, 255, 255, 0.0837)'
+      table-row-background-color: '#2B2B2B'
+      table-row-alternative-background-color: '#262626'
+
+      # Icons
+      state-icon-color:           'rgba(255, 255, 255, 0.7860)'
+      state-icon-active-color:    '#4CC2FF'
+      state-icon-unavailable-color: 'rgba(255, 255, 255, 0.3628)'
+      paper-item-icon-color:        'rgba(255, 255, 255, 0.7860)'
+      paper-item-icon-active-color: '#4CC2FF'
+      rgb-state-icon-color:        '200, 200, 200'
+      rgb-state-icon-active-color: '76, 194, 255'
+
+      # Sidebar
+      sidebar-background-color:           'rgba(32, 32, 32, 0.85)'
+      sidebar-icon-color:                 'rgba(255, 255, 255, 0.7860)'
+      sidebar-text-color:                 '#FFFFFF'
+      sidebar-selected-background-color:  'rgba(76, 194, 255, 0.16)'
+      sidebar-selected-icon-color:        '#4CC2FF'
+      sidebar-selected-text-color:        '#4CC2FF'
+
+      # App header
+      app-header-background-color: 'rgba(32, 32, 32, 0.85)'
+      app-header-text-color:       '#FFFFFF'
+      app-header-edit-background-color: '#1C1C1C'
+
+      # Inputs / form fields
+      input-background-color:     '#2D2D2D'
+      input-fill-color:           '#2D2D2D'
+      input-ink-color:            '#FFFFFF'
+      input-label-ink-color:      'rgba(255, 255, 255, 0.7860)'
+      input-disabled-fill-color:  '#262626'
+      input-disabled-ink-color:   'rgba(255, 255, 255, 0.3628)'
+      input-disabled-label-ink-color: 'rgba(255, 255, 255, 0.3628)'
+      input-dropdown-icon-color:  'rgba(255, 255, 255, 0.7860)'
+      input-idle-line-color:      'rgba(255, 255, 255, 0.5442)'
+      input-hover-line-color:     '#4CC2FF'
+      input-disabled-line-color:  'rgba(255, 255, 255, 0.0837)'
+      input-outlined-idle-border-color:     'rgba(255, 255, 255, 0.5442)'
+      input-outlined-hover-border-color:    '#4CC2FF'
+      input-outlined-disabled-border-color: 'rgba(255, 255, 255, 0.0837)'
+
+      # Material design (MDC)
+      mdc-theme-primary:    '#4CC2FF'
+      mdc-theme-secondary:  '#4CC2FF'
+      mdc-theme-on-primary: '#000000'
+      mdc-theme-on-secondary: '#000000'
+      mdc-theme-surface:    'rgba(43, 43, 43, 0.60)'
+      mdc-theme-on-surface: '#FFFFFF'
+      mdc-button-outline-color: 'rgba(255, 255, 255, 0.0931)'
+
+      # Switches
+      switch-checked-color:           '#4CC2FF'
+      switch-checked-button-color:    '#000000'
+      switch-checked-track-color:     '#4CC2FF'
+      switch-unchecked-button-color:  'rgba(255, 255, 255, 0.7860)'
+      switch-unchecked-track-color:   'rgba(255, 255, 255, 0.0931)'
+      paper-toggle-button-checked-button-color: '#000000'
+      paper-toggle-button-checked-bar-color:    '#4CC2FF'
+      paper-toggle-button-unchecked-button-color: 'rgba(255, 255, 255, 0.7860)'
+      paper-toggle-button-unchecked-bar-color:    'rgba(255, 255, 255, 0.5442)'
+
+      # Sliders
+      slider-color:                       '#4CC2FF'
+      slider-bar-color:                   'rgba(255, 255, 255, 0.0931)'
+      paper-slider-knob-color:            '#4CC2FF'
+      paper-slider-knob-start-color:      '#4CC2FF'
+      paper-slider-pin-color:             '#4CC2FF'
+      paper-slider-active-color:          '#4CC2FF'
+      paper-slider-secondary-color:       'rgba(76, 194, 255, 0.30)'
+      paper-slider-container-color:       'rgba(255, 255, 255, 0.0931)'
+
+      # Tabs
+      paper-tabs-selection-bar-color: '#4CC2FF'
+
+      # Labels / badges
+      label-badge-background-color: '#2B2B2B'
+      label-badge-text-color:       '#FFFFFF'
+      label-badge-red:              '#FF99A4'
+      label-badge-green:            '#6CCB5F'
+      label-badge-blue:             '#4CC2FF'
+      label-badge-yellow:           '#FCE100'
+      label-badge-grey:             '#C8C8C8'
+
+      # Status colors (Fluent dark system fills)
+      warning-color: '#FCE100'
+      error-color:   '#FF99A4'
+      success-color: '#6CCB5F'
+      info-color:    '#4CC2FF'
+
+      # Code blocks
+      code-editor-background-color: '#1C1C1C'
+      markdown-code-background-color: '#262626'
+
+      # Calendar
+      calendar-background-color: 'rgba(43, 43, 43, 0.60)'
+
+      # Energy dashboard
+      energy-grid-consumption-color: '#4CC2FF'
+      energy-grid-return-color:      '#6CCB5F'
+      energy-solar-color:            '#FCE100'
+      energy-non-fossil-color:       '#10893E'
+      energy-battery-out-color:      '#B4A0FF'
+      energy-battery-in-color:       '#8764B8'
+      energy-gas-color:              '#FFB900'
+      energy-water-color:            '#3AA0A4'
