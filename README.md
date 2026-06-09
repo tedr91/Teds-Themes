@@ -51,6 +51,77 @@ These surfaces still receive a Mica-style translucent fill via `--ha-dialog-surf
 
 ---
 
+## Backgrounds (wallpaper)
+
+The Mica blur effect on cards only "pops" when there's something interesting behind them. The theme ships **8 Win11-style wallpapers** in the [backgrounds/](backgrounds/) folder, and a sensible default is enabled out of the box:
+
+- **Light mode:** `RadialGradientBlue.jpg` (matches the official Windows 11 default wallpaper feel)
+- **Dark mode:** `DarkGreyLittleSquares.jpg` (subtle dark grid)
+
+Wallpapers are served via the [jsDelivr CDN](https://www.jsdelivr.com/) directly from this repo — **no manual download needed** when installing via HACS. They apply to every dashboard view automatically via the native HA theme variable `lovelace-background`.
+
+### Switching to a different bundled wallpaper
+
+Edit [themes/windows11.yaml](themes/windows11.yaml) and change the filename in the `lovelace-background` line under the `light:` or `dark:` block. Bundled options (preview each by clicking):
+
+| Filename | Mood |
+| --- | --- |
+| [`Chain.jpg`](backgrounds/Chain.jpg) | Industrial, monochrome |
+| [`DarkGreyLittleSquares.jpg`](backgrounds/DarkGreyLittleSquares.jpg) | Subtle dark grid (dark default) |
+| [`Leaf.jpg`](backgrounds/Leaf.jpg) | Organic green |
+| [`MinimalistMountains.jpg`](backgrounds/MinimalistMountains.jpg) | Soft pastel landscape |
+| [`MountainStream.jpg`](backgrounds/MountainStream.jpg) | Cool blues / nature |
+| [`RadialGradientBlue.jpg`](backgrounds/RadialGradientBlue.jpg) | Win11 hero gradient (light default) |
+| [`Railroad.jpg`](backgrounds/Railroad.jpg) | Linear repeating pattern |
+| [`SunshineThroughMountains.jpg`](backgrounds/SunshineThroughMountains.jpg) | Warm golden hour |
+
+For example to use `MountainStream.jpg` in dark mode:
+
+```yaml
+dark:
+  lovelace-background: 'center / cover no-repeat fixed url("https://cdn.jsdelivr.net/gh/tedr91/ha-windows11-theme@main/backgrounds/MountainStream.jpg")'
+```
+
+### Using local copies (faster, works offline)
+
+If you'd rather host the images locally:
+
+1. Download the desired image(s) from the [backgrounds/](backgrounds/) folder
+2. Place them in your Home Assistant `config/www/backgrounds/` folder (create it if it doesn't exist)
+3. Replace the URL in the theme with the `/local/...` path:
+
+   ```yaml
+   light:
+     lovelace-background: 'center / cover no-repeat fixed url("/local/backgrounds/RadialGradientBlue.jpg")'
+   ```
+
+4. Reload themes (Developer Tools → YAML → **Reload Themes**)
+
+### Disabling the wallpaper
+
+Set `lovelace-background` to a solid color or remove the line entirely:
+
+```yaml
+light:
+  lovelace-background: 'var(--primary-background-color)'   # flat color
+```
+
+### Per-view overrides
+
+Any view can override the theme-level wallpaper using the standard HA view background config — set it in the view editor under **View settings → Background**, or in YAML:
+
+```yaml
+views:
+  - title: Bedroom
+    background:
+      image: /local/backgrounds/MountainStream.jpg
+      size: cover
+      alignment: center
+      attachment: fixed
+```
+
+---
+
 ## Customizing the accent color
 
 Windows 11 lets users pick a system accent. To match yours, edit [themes/windows11.yaml](themes/windows11.yaml) and change these in **both** the `light:` and `dark:` mode blocks:
@@ -85,6 +156,7 @@ Common Windows 11 accents:
 ha-windows11-theme/
 ├── themes/
 │   └── windows11.yaml      ← the theme
+├── backgrounds/            ← bundled Win11-style wallpapers (served via jsDelivr CDN)
 ├── README.md
 ├── LICENSE
 └── .gitignore

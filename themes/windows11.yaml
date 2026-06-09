@@ -108,6 +108,19 @@ Windows 11:
     #  LIGHT  (Mica Light — #F3F3F3 base, #0078D4 accent)
     # =========================================================================
     light:
+      # ── Default dashboard wallpaper (Win11-style radial blue gradient) ──
+      # HA reads `--lovelace-background` and uses it as the view background
+      # whenever no per-view `background:` is set. See
+      # https://github.com/home-assistant/frontend/blob/dev/src/panels/lovelace/views/hui-view-background.ts
+      #
+      # Images are served via jsDelivr CDN from this repo's `backgrounds/` folder.
+      # To use one of the other 7 bundled images, change the filename below to:
+      #   Leaf.jpg | MinimalistMountains.jpg | MountainStream.jpg |
+      #   SunshineThroughMountains.jpg | Railroad.jpg | Chain.jpg |
+      #   DarkGreyLittleSquares.jpg | RadialGradientBlue.jpg
+      # Or point at any URL / /local/... path on your HA instance.
+      lovelace-background: 'center / cover no-repeat fixed url("https://cdn.jsdelivr.net/gh/tedr91/ha-windows11-theme@main/backgrounds/RadialGradientBlue.jpg")'
+
       # ── HA 2026.x primary color scale (Win11 default blue at -40) ──
       ha-color-primary-05: '#001D2E'
       ha-color-primary-10: '#003352'
@@ -291,6 +304,10 @@ Windows 11:
     #  DARK  (Mica Dark — #202020 base, #4CC2FF accent)
     # =========================================================================
     dark:
+      # ── Default dashboard wallpaper (subtle dark Win11 grid pattern) ──
+      # See the light-mode comment above for details on switching images.
+      lovelace-background: 'center / cover no-repeat fixed url("https://cdn.jsdelivr.net/gh/tedr91/ha-windows11-theme@main/backgrounds/DarkGreyLittleSquares.jpg")'
+
       # ── HA 2026.x primary color scale (Win11 dark accent at -60) ──
       ha-color-primary-05: '#001D2E'
       ha-color-primary-10: '#003352'
