@@ -94,14 +94,28 @@ Windows 11:
   #  --divider-color, which we set to the correct Win11 stroke value per mode.)
 
   # ---------------------------------------------------------------------------
-  # 4. App-header sizing (subtle, not essential to Win11)
+  # 4. Dialogs & popovers — TRUE Mica blur via HA's built-in dialog vars
+  #    Wired into ha-dialog, ha-adaptive-dialog, ha-bottom-sheet, and
+  #    ha-adaptive-popover by the HA frontend (HA 2026.x+).
+  #    See: src/components/ha-dialog.ts (`wa-dialog::part(dialog)` rules).
+  # ---------------------------------------------------------------------------
+  ha-dialog-surface-backdrop-filter: 'blur(40px) saturate(125%)'
+  ha-dialog-scrim-backdrop-filter: 'blur(8px)'
+
+  # Stronger Win11-style elevation — applied to dropdowns, dialogs, popovers
+  # via Web Awesome's `--wa-shadow-m` / `--wa-shadow-l` tokens.
+  wa-shadow-m: '0 8px 24px rgba(0, 0, 0, 0.18), 0 2px 6px rgba(0, 0, 0, 0.10)'
+  wa-shadow-l: '0 16px 40px rgba(0, 0, 0, 0.28), 0 4px 12px rgba(0, 0, 0, 0.16)'
+
+  # ---------------------------------------------------------------------------
+  # 5. App-header sizing (subtle, not essential to Win11)
   # ---------------------------------------------------------------------------
   app-header-background-color: 'var(--primary-background-color)'
   app-header-text-color: 'var(--primary-text-color)'
   app-header-border-bottom: '1px solid var(--divider-color)'
 
   # ---------------------------------------------------------------------------
-  # 5. Light / Dark token sets
+  # 6. Light / Dark token sets
   # ---------------------------------------------------------------------------
   modes:
     # =========================================================================
@@ -161,7 +175,7 @@ Windows 11:
       # ── Web Awesome surface tokens (drive dropdowns + dialogs Mica fill) ──
       wa-color-surface-raised:   'rgba(249, 249, 249, 0.85)'
       wa-color-surface-default:  'rgba(252, 252, 252, 0.70)'
-      wa-color-surface-border:   'rgba(0, 0, 0, 0.0578)'
+      wa-color-surface-border:   'rgba(0, 0, 0, 0.1200)'
       wa-shadow-m: '0 8px 16px rgba(0, 0, 0, 0.14), 0 0 1px rgba(0, 0, 0, 0.12)'
 
       # ── Brand / accent (legacy aliases — still used in many components) ──
@@ -173,10 +187,15 @@ Windows 11:
       rgb-accent-color: '0, 120, 212'
 
       # ── Backgrounds — Mica Light (legacy aliases) ──
+      # NOTE: --card-background-color is intentionally MORE OPAQUE than
+      # --ha-card-background. ha-card reads --ha-card-background first
+      # (translucent, with full Mica blur). ha-dropdown reads
+      # --card-background-color first via --wa-color-surface-raised, so
+      # menus get an opaque-enough fill to stay readable over busy content.
       primary-background-color:   '#F3F3F3'
       secondary-background-color: '#EAEAEA'
-      card-background-color:           'rgba(252, 252, 252, 0.70)'
-      ha-card-background:              'rgba(252, 252, 252, 0.70)'
+      card-background-color:           'rgba(252, 252, 252, 0.92)'   # ← menus
+      ha-card-background:              'rgba(252, 252, 252, 0.70)'   # ← cards
       paper-card-background-color:     'rgba(252, 252, 252, 0.70)'
       paper-listbox-background-color:  '#FFFFFF'
       paper-dialog-background-color:   'rgba(249, 249, 249, 0.85)'
@@ -349,7 +368,7 @@ Windows 11:
       # ── Web Awesome surface tokens (drive dropdowns + dialogs Mica fill) ──
       wa-color-surface-raised:   'rgba(44, 44, 44, 0.85)'
       wa-color-surface-default:  'rgba(43, 43, 43, 0.60)'
-      wa-color-surface-border:   'rgba(255, 255, 255, 0.0931)'
+      wa-color-surface-border:   'rgba(255, 255, 255, 0.1800)'
       wa-shadow-m: '0 8px 16px rgba(0, 0, 0, 0.35), 0 0 1px rgba(0, 0, 0, 0.30)'
 
       # ── Brand / accent — Win11 dark accent skews lighter for AA contrast ──
@@ -361,10 +380,15 @@ Windows 11:
       rgb-accent-color: '76, 194, 255'
 
       # ── Backgrounds — Mica Dark (legacy aliases) ──
+      # NOTE: --card-background-color is intentionally MORE OPAQUE than
+      # --ha-card-background. ha-card reads --ha-card-background first
+      # (translucent, with full Mica blur). ha-dropdown reads
+      # --card-background-color first via --wa-color-surface-raised, so
+      # menus get an opaque-enough fill to stay readable over busy content.
       primary-background-color:   '#202020'
       secondary-background-color: '#1C1C1C'
-      card-background-color:           'rgba(43, 43, 43, 0.60)'
-      ha-card-background:              'rgba(43, 43, 43, 0.60)'
+      card-background-color:           'rgba(43, 43, 43, 0.92)'      # ← menus
+      ha-card-background:              'rgba(43, 43, 43, 0.60)'      # ← cards
       paper-card-background-color:    'rgba(43, 43, 43, 0.60)'
       paper-listbox-background-color: '#2D2D2D'
       paper-dialog-background-color:  'rgba(44, 44, 44, 0.85)'

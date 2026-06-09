@@ -43,11 +43,13 @@ A Home Assistant theme inspired by Microsoft's **Fluent Design** language used i
 
 ## Known limitations
 
-### Menu and dialog blur
+### Dropdown row-action menus
 
-Cards get real `backdrop-filter` blur because HA exposes `--ha-card-backdrop-filter` as a theme variable. **Dropdown menus** (the ⋮ row-action menus) and **dialogs** (more-info, settings popups) do not have equivalent variables in HA 2026.x — and Web Awesome's `wa-popup` positioning (static layout + floating-ui transforms) breaks `backdrop-filter` even when applied directly via injected CSS.
+Cards, dialogs (more-info, settings popups, confirmations), bottom sheets, and adaptive popovers all get real `backdrop-filter` blur because HA exposes dedicated theme variables (`--ha-card-backdrop-filter`, `--ha-dialog-surface-backdrop-filter`).
 
-These surfaces still receive a Mica-style translucent fill via `--ha-dialog-surface-background` and `--wa-color-surface-raised`, so they look reasonably Win11-flavored — they just don't blur the content behind them. This requires changes in the HA frontend or Web Awesome upstream; a theme alone cannot fix it.
+The remaining holdout is the **dropdown row-action menu** (the ⋮ menu on automation/script rows), which is built on Web Awesome's `wa-popup`. HA exposes no equivalent backdrop-filter variable for it, and even when blur is applied directly to the menu surface via injected CSS, the browser refuses to paint the blur — a Web Awesome layout/painting quirk that no theme can work around.
+
+To compensate, the theme makes the menu surface ~92% opaque (instead of the usual translucent Mica fill) so menu items remain readable over busy backgrounds like data tables. It also bumps the menu's stroke and elevation shadow to give it more visual depth even without true frost.
 
 ---
 
