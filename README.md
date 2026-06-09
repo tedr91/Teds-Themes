@@ -1,12 +1,13 @@
 # Windows 11 — Home Assistant Theme
 
-A Home Assistant theme inspired by Microsoft's **Fluent Design** language used in Windows 11.
+A Home Assistant theme inspired by Microsoft's **Fluent Design** language used in Windows 11. **No add-ons required** — works on stock Home Assistant 2026.x with native `backdrop-filter` blur on cards.
 
-- Mica / Acrylic translucent surfaces with backdrop blur
+- Mica / Acrylic translucent surfaces with **real** backdrop blur on cards (via HA's built-in `--ha-card-backdrop-filter`)
 - Segoe UI Variable typography (with safe fallbacks on non-Windows clients)
 - 8 px card radius, 4 px control radius (Win11 corner system)
 - Windows 11 accent color (`#0078D4` light / `#4CC2FF` dark)
 - Single theme with `modes:` so HA's **Auto** option follows your OS theme
+- Uses both the new HA 2026.x `--ha-color-*` token system and all legacy `--paper-*` / `--mdc-*` / `--primary-*` aliases — works across HA versions
 
 | Light Mica | Dark Mica |
 | :--------: | :-------: |
@@ -16,7 +17,13 @@ A Home Assistant theme inspired by Microsoft's **Fluent Design** language used i
 
 ## Installation
 
-### Option 1 — Manual
+### Option 1 — HACS (recommended)
+
+1. HACS → ⋮ → **Custom repositories** → add this repo's URL with category **Theme**.
+2. Find **Windows 11** in HACS → Themes, install, then restart Home Assistant.
+3. Open your **Profile** (bottom-left avatar) and pick **Windows 11** as the theme. Set **Theme mode** to **Auto** to follow the OS.
+
+### Option 2 — Manual
 
 1. Copy [themes/windows11.yaml](themes/windows11.yaml) into your Home Assistant `config/themes/` folder.
    - Create the `themes/` folder if it does not exist.
@@ -28,35 +35,19 @@ A Home Assistant theme inspired by Microsoft's **Fluent Design** language used i
    ```
 
 3. Restart Home Assistant (**Developer Tools → YAML → Restart**, or full restart).
-4. Open your **Profile** (bottom-left avatar) and pick **Windows 11** as the theme. Set **Theme mode** to **Auto** to follow the OS.
+4. Select **Windows 11** in your Profile as above.
 
-### Option 2 — HACS (custom repository)
-
-1. HACS → ⋮ → **Custom repositories** → add this repo's URL with category **Theme**.
-2. Find **Windows 11** in HACS → Themes, install, then restart.
-3. Select it in your profile as above.
+> **Tip:** The Mica blur effect on cards looks best when the dashboard background isn't pure flat color. Set a wallpaper via a `picture` view background or the [browser_mod](https://github.com/thomasloven/hass-browser_mod) integration for the most dramatic frosted-glass look.
 
 ---
 
-## Recommended: install UIX for true Mica/Acrylic
+## Known limitations
 
-The theme works on its own, but the real **frosted glass** effect (`backdrop-filter: blur(...)`) is delivered via [UI eXtension (UIX)](https://github.com/Lint-Free-Technology/uix) — the spiritual successor to card-mod. Without it you still get a faithful Win11 palette; cards just won't blur what's behind them.
+### Menu and dialog blur
 
-1. HACS → Integrations → search **UI eXtension** → install, then restart Home Assistant.
-2. Settings → Devices & services → **Add integration** → **UI eXtension**.
-3. Hard-refresh the browser (Ctrl+F5). Cards should now blur their backdrop.
+Cards get real `backdrop-filter` blur because HA exposes `--ha-card-backdrop-filter` as a theme variable. **Dropdown menus** (the ⋮ row-action menus) and **dialogs** (more-info, settings popups) do not have equivalent variables in HA 2026.x — and Web Awesome's `wa-popup` positioning (static layout + floating-ui transforms) breaks `backdrop-filter` even when applied directly via injected CSS.
 
-UIX manages its own frontend resource (`uix.js`) — you do **not** need to add a Lovelace resource manually.
-
-### Already using card-mod?
-
-UIX is a drop-in replacement for card-mod up to v4.2.1, but you should not run both at once. Per the [UIX FAQ](https://uix.lf.technology/faq/):
-
-1. Uninstall **card-mod** (HACS → card-mod → ⋮ → Remove).
-2. If you added `card-mod` via `extra_module_url`, remove that entry from `configuration.yaml` and restart HA.
-3. Install **UI eXtension** as above.
-
-> **Tip:** The Mica effect looks best when the dashboard background isn't pure flat color. You can set a wallpaper via the [browser_mod](https://github.com/thomasloven/hass-browser_mod) integration or a `picture` view background.
+These surfaces still receive a Mica-style translucent fill via `--ha-dialog-surface-background` and `--wa-color-surface-raised`, so they look reasonably Win11-flavored — they just don't blur the content behind them. This requires changes in the HA frontend or Web Awesome upstream; a theme alone cannot fix it.
 
 ---
 
@@ -65,10 +56,12 @@ UIX is a drop-in replacement for card-mod up to v4.2.1, but you should not run b
 Windows 11 lets users pick a system accent. To match yours, edit [themes/windows11.yaml](themes/windows11.yaml) and change these in **both** the `light:` and `dark:` mode blocks:
 
 ```yaml
-primary-color: '#0078D4'           # ← your accent (hex)
-accent-color:  '#0078D4'           # ← same
+ha-color-primary-40: '#0078D4'     # ← your accent (hex) — light mode default
+ha-color-primary-60: '#4CC2FF'     # ← your accent (lighter) — dark mode default
+primary-color: '#0078D4'           # ← legacy alias, same as ha-color-primary-40/60 per mode
+accent-color:  '#0078D4'           # ← same as primary-color
 rgb-primary-color: '0, 120, 212'   # ← same color in R, G, B
-rgb-accent-color:  '0, 120, 212'
+rgb-accent-color: '0, 120, 212'
 ```
 
 Common Windows 11 accents:
@@ -102,7 +95,7 @@ ha-windows11-theme/
 ## Credits
 
 - Color tokens & opacities derived from Microsoft's public **Fluent 2 / WinUI 3** design specifications.
-- Built for Home Assistant ≥ 2024.x.
+- Built for Home Assistant 2026.x (also compatible with earlier versions via legacy token aliases).
 
 ## License
 
