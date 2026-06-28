@@ -1,4 +1,4 @@
-# Microsoft, Apple & Google UI Themes for Home Assistant
+# Ted's Theme Collection for Home Assistant
 
 Four native Home Assistant themes that recreate the world's major UI design languages — **no add-ons required**. Each works on stock Home Assistant 2026.x, ships light + dark via `modes:` (so HA's **Auto** option follows your OS), and uses both the new HA 2026.x `--ha-color-*` token system and the legacy `--paper-*` / `--mdc-*` / `--primary-*` aliases for cross-version compatibility.
 
@@ -18,7 +18,7 @@ Four native Home Assistant themes that recreate the world's major UI design lang
 ### Option 1 — HACS (recommended)
 
 1. HACS → ⋮ → **Custom repositories** → add this repo's URL with category **Theme**.
-2. Find **Microsoft, Apple & Google UI Themes** in HACS → Themes, install, then restart Home Assistant.
+2. Find **Ted's Theme Collection** in HACS → Themes, install, then restart Home Assistant.
 3. Open your **Profile** (bottom-left avatar) and pick one of **Microsoft Windows UI**, **Microsoft Fluent 2**, **Apple HIG**, or **Google Material 3** as the theme. Set **Theme mode** to **Auto** to follow the OS.
 
 ### Option 2 — Manual
