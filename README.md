@@ -13,6 +13,33 @@ Four native Home Assistant themes that recreate the world's major UI design lang
 
 ---
 
+## Preview
+
+The dashboards below are built with [**Ted's Cards**](https://github.com/tedr91/HA-Teds-Cards) — set any card to `theme: ha` and it automatically follows whichever theme you've selected, so the same dashboard takes on each design language (and rides on each theme's bundled wallpaper).
+
+![Ted's Theme Collection — Microsoft Windows UI, Microsoft Fluent 2, Apple HIG and Google Material 3](images/showcase.webp)
+
+<details open>
+<summary><b>Each theme — light &amp; dark</b></summary>
+
+#### Microsoft Windows UI
+![Microsoft Windows UI theme — light and dark dashboards](images/theme-microsoft-windows-ui.webp)
+
+#### Microsoft Fluent 2
+![Microsoft Fluent 2 theme — light and dark dashboards](images/theme-microsoft-fluent2.webp)
+
+#### Apple HIG
+![Apple HIG theme — light and dark dashboards](images/theme-apple-hig.webp)
+
+#### Google Material 3
+![Google Material 3 theme — light and dark dashboards](images/theme-google-material-3.webp)
+
+</details>
+
+> The card layouts above are visual mock-ups for illustration; install [Ted's Cards](https://github.com/tedr91/HA-Teds-Cards) to use them in your own dashboards.
+
+---
+
 ## Installation
 
 ### Option 1 — HACS (recommended)
