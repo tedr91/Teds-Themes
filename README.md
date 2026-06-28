@@ -1,17 +1,15 @@
-# Windows 11 — Home Assistant Theme
+# Microsoft, Apple & Google UI Themes for Home Assistant
 
-A Home Assistant theme inspired by Microsoft's **Fluent Design** language used in Windows 11. **No add-ons required** — works on stock Home Assistant 2026.x with native `backdrop-filter` blur on cards.
+Four native Home Assistant themes that recreate the world's major UI design languages — **no add-ons required**. Each works on stock Home Assistant 2026.x, ships light + dark via `modes:` (so HA's **Auto** option follows your OS), and uses both the new HA 2026.x `--ha-color-*` token system and the legacy `--paper-*` / `--mdc-*` / `--primary-*` aliases for cross-version compatibility.
 
-- Mica / Acrylic translucent surfaces with **real** backdrop blur on cards (via HA's built-in `--ha-card-backdrop-filter`)
-- Segoe UI Variable typography (with safe fallbacks on non-Windows clients)
-- 8 px card radius, 4 px control radius (Win11 corner system)
-- Windows 11 accent color (`#0078D4` light / `#4CC2FF` dark)
-- Single theme with `modes:` so HA's **Auto** option follows your OS theme
-- Uses both the new HA 2026.x `--ha-color-*` token system and all legacy `--paper-*` / `--mdc-*` / `--primary-*` aliases — works across HA versions
+| Theme | Design language | Look | Accent (light / dark) |
+| --- | --- | --- | --- |
+| **Microsoft Windows UI** | Windows 11 desktop (Fluent Design) | Mica/Acrylic translucency, Segoe UI Variable, 8 px cards, wallpaper | `#0078D4` / `#4CC2FF` |
+| **Microsoft Fluent 2** | Fluent 2 (Microsoft 365 / Teams / web) | Flat, solid neutral surfaces, Segoe UI, 6 px cards | `#0F6CBD` / `#479EF5` |
+| **Apple HIG** | Apple Human Interface Guidelines (iOS / macOS) | Grouped surfaces, SF Pro, 12 px cards, system blue | `#007AFF` / `#0A84FF` |
+| **Google Material 3** | Material Design 3 / Material You | Tonal surfaces, Roboto / Google Sans, 12 px cards, 28 px dialogs, pill buttons | `#6750A4` / `#D0BCFF` |
 
-| Light Mica | Dark Mica |
-| :--------: | :-------: |
-| `#F3F3F3` background, `#0078D4` accent | `#202020` background, `#4CC2FF` accent |
+> **Note for existing users:** the original **Windows 11** theme has been renamed to **Microsoft Windows UI**. After updating, re-select it in your Profile (the old "Windows 11" name will no longer appear).
 
 ---
 
@@ -20,12 +18,16 @@ A Home Assistant theme inspired by Microsoft's **Fluent Design** language used i
 ### Option 1 — HACS (recommended)
 
 1. HACS → ⋮ → **Custom repositories** → add this repo's URL with category **Theme**.
-2. Find **Windows 11** in HACS → Themes, install, then restart Home Assistant.
-3. Open your **Profile** (bottom-left avatar) and pick **Windows 11** as the theme. Set **Theme mode** to **Auto** to follow the OS.
+2. Find **Microsoft, Apple & Google UI Themes** in HACS → Themes, install, then restart Home Assistant.
+3. Open your **Profile** (bottom-left avatar) and pick one of **Microsoft Windows UI**, **Microsoft Fluent 2**, **Apple HIG**, or **Google Material 3** as the theme. Set **Theme mode** to **Auto** to follow the OS.
 
 ### Option 2 — Manual
 
-1. Copy [themes/windows11.yaml](themes/windows11.yaml) into your Home Assistant `config/themes/` folder.
+1. Copy the theme file(s) you want from [themes/](themes/) into your Home Assistant `config/themes/` folder:
+   - [themes/microsoft-windows-ui.yaml](themes/microsoft-windows-ui.yaml) — Microsoft Windows UI
+   - [themes/microsoft-fluent2.yaml](themes/microsoft-fluent2.yaml) — Microsoft Fluent 2
+   - [themes/apple-hig.yaml](themes/apple-hig.yaml) — Apple HIG
+   - [themes/google-material-3.yaml](themes/google-material-3.yaml) — Google Material 3
    - Create the `themes/` folder if it does not exist.
 2. Add the following to `configuration.yaml` (skip if you already have a `frontend:` block with `themes:`):
 
@@ -35,27 +37,29 @@ A Home Assistant theme inspired by Microsoft's **Fluent Design** language used i
    ```
 
 3. Restart Home Assistant (**Developer Tools → YAML → Restart**, or full restart).
-4. Select **Windows 11** in your Profile as above.
+4. Select your theme in your Profile as above.
 
-> **Tip:** The Mica blur effect on cards looks best when the dashboard background isn't pure flat color. Set a wallpaper via a `picture` view background or the [browser_mod](https://github.com/thomasloven/hass-browser_mod) integration for the most dramatic frosted-glass look.
+> **Tip:** The **Microsoft Windows UI** theme's Mica blur on cards looks best over a wallpaper (one is enabled by default). The **Microsoft Fluent 2**, **Apple HIG**, and **Google Material 3** themes are intentionally flat/solid and need no wallpaper.
 
 ---
 
 ## Known limitations
 
-### Dropdown row-action menus
+### Dropdown row-action menus (translucent themes)
+
+This applies to the **Microsoft Windows UI** and **Apple HIG** themes, which use translucency. The **Microsoft Fluent 2** and **Google Material 3** themes are fully solid, so they are unaffected.
 
 Cards, dialogs (more-info, settings popups, confirmations), bottom sheets, and adaptive popovers all get real `backdrop-filter` blur because HA exposes dedicated theme variables (`--ha-card-backdrop-filter`, `--ha-dialog-surface-backdrop-filter`).
 
 The remaining holdout is the **dropdown row-action menu** (the ⋮ menu on automation/script rows), which is built on Web Awesome's `wa-popup`. HA exposes no equivalent backdrop-filter variable for it, and even when blur is applied directly to the menu surface via injected CSS, the browser refuses to paint the blur — a Web Awesome layout/painting quirk that no theme can work around.
 
-To compensate, the theme makes the menu surface ~92% opaque (instead of the usual translucent Mica fill) so menu items remain readable over busy backgrounds like data tables. It also bumps the menu's stroke and elevation shadow to give it more visual depth even without true frost.
+To compensate, these themes make the menu surface highly opaque (instead of a translucent fill) so menu items remain readable over busy backgrounds like data tables. They also bump the menu's stroke and elevation shadow to give it more visual depth even without true frost.
 
 ---
 
-## Backgrounds (wallpaper)
+## Backgrounds (wallpaper) — Microsoft Windows UI
 
-The Mica blur effect on cards only "pops" when there's something interesting behind them. The theme ships **8 Win11-style wallpapers** in the [backgrounds/](backgrounds/) folder, and a sensible default is enabled out of the box:
+The Mica blur effect on cards only "pops" when there's something interesting behind them. The **Microsoft Windows UI** theme ships **8 Win11-style wallpapers** in the [backgrounds/](backgrounds/) folder, and a sensible default is enabled out of the box. (The Fluent 2, Apple HIG, and Material 3 themes are solid by design, but you can add a wallpaper to them the same way.)
 
 - **Default (both light & dark modes):** `RadialGradientBlue.jpg` (matches the official Windows 11 default wallpaper feel)
 
@@ -63,7 +67,7 @@ Wallpapers are served via the [jsDelivr CDN](https://www.jsdelivr.com/) directly
 
 ### Switching to a different bundled wallpaper
 
-Edit [themes/windows11.yaml](themes/windows11.yaml) and change the filename in the `lovelace-background` line under the `light:` or `dark:` block. Bundled options (preview each by clicking):
+Edit [themes/microsoft-windows-ui.yaml](themes/microsoft-windows-ui.yaml) and change the filename in the `lovelace-background` line under the `light:` or `dark:` block. Bundled options (preview each by clicking):
 
 | Filename | Mood |
 | --- | --- |
@@ -80,7 +84,7 @@ For example to use `MountainStream.jpg` in dark mode:
 
 ```yaml
 dark:
-  lovelace-background: 'center / cover no-repeat fixed url("https://cdn.jsdelivr.net/gh/tedr91/ha-windows11-theme@main/backgrounds/MountainStream.jpg")'
+  lovelace-background: 'center / cover no-repeat fixed url("https://cdn.jsdelivr.net/gh/tedr91/teds-themes@main/backgrounds/MountainStream.jpg")'
 ```
 
 ### Using local copies (faster, works offline)
@@ -125,7 +129,7 @@ views:
 
 ## Customizing the accent color
 
-Windows 11 lets users pick a system accent. To match yours, edit [themes/windows11.yaml](themes/windows11.yaml) and change these in **both** the `light:` and `dark:` mode blocks:
+Each theme ships with its design language's signature accent (**Microsoft Windows UI** `#0078D4`, **Microsoft Fluent 2** `#0F6CBD`, **Apple HIG** `#007AFF`, **Google Material 3** `#6750A4`). To use a different accent, edit the relevant file in [themes/](themes/) — for example [themes/microsoft-windows-ui.yaml](themes/microsoft-windows-ui.yaml) — and change these in **both** the `light:` and `dark:` mode blocks:
 
 ```yaml
 ha-color-primary-40: '#0078D4'     # ← your accent (hex) — light mode default
@@ -154,10 +158,14 @@ Common Windows 11 accents:
 ## File structure
 
 ```
-ha-windows11-theme/
+teds-themes/
 ├── themes/
-│   └── windows11.yaml      ← the theme
-├── backgrounds/            ← bundled Win11-style wallpapers (served via jsDelivr CDN)
+│   ├── microsoft-windows-ui.yaml   ← Microsoft Windows UI (Windows 11 / Mica)
+│   ├── microsoft-fluent2.yaml      ← Microsoft Fluent 2 (flat, solid)
+│   ├── apple-hig.yaml              ← Apple HIG (grouped, SF Pro)
+│   └── google-material-3.yaml      ← Google Material 3 (tonal, Roboto)
+├── backgrounds/                    ← bundled Win11-style wallpapers (served via jsDelivr CDN)
+├── design-guides/                  ← Fluent 2, Apple HIG & Material 3 reference specs
 ├── README.md
 ├── LICENSE
 └── .gitignore
@@ -167,7 +175,9 @@ ha-windows11-theme/
 
 ## Credits
 
-- Color tokens & opacities derived from Microsoft's public **Fluent 2 / WinUI 3** design specifications.
+- **Microsoft Windows UI** & **Microsoft Fluent 2** — color tokens & opacities derived from Microsoft's public **Fluent 2 / WinUI 3** design specifications.
+- **Apple HIG** — color, type, and shape tokens derived from Apple's public **Human Interface Guidelines** (iOS 18 / macOS Sequoia).
+- **Google Material 3** — color, type, and shape tokens derived from Google's public **Material Design 3 / Material You** baseline specifications.
 - Built for Home Assistant 2026.x (also compatible with earlier versions via legacy token aliases).
 
 ## License

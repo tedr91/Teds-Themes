@@ -1,5 +1,8 @@
 # =============================================================================
-#  Windows 11 — Home Assistant Theme
+#  Microsoft Windows UI — Home Assistant Theme
+#
+#  The Windows 11 desktop look: Mica/Acrylic translucency, Segoe UI Variable,
+#  8 px radius, and the Windows accent blue.
 #
 #  Native HA 2026.x theme — no UIX or card-mod required.
 #  Fluent Design: Mica/Acrylic translucency, Segoe UI Variable, 8 px radius.
@@ -22,7 +25,7 @@
 #  translucent Mica-style fill but NOT a true frosted blur. Cards do.
 # =============================================================================
 
-Windows 11:
+Microsoft Windows UI:
   # ---------------------------------------------------------------------------
   # 1. Typography — Segoe UI Variable (Win11), graceful fallbacks elsewhere
   # ---------------------------------------------------------------------------
@@ -133,7 +136,7 @@ Windows 11:
       #   SunshineThroughMountains.jpg | Railroad.jpg | Chain.jpg |
       #   DarkGreyLittleSquares.jpg | RadialGradientBlue.jpg
       # Or point at any URL / /local/... path on your HA instance.
-      lovelace-background: 'center / cover no-repeat fixed url("https://cdn.jsdelivr.net/gh/tedr91/ha-windows11-theme@main/backgrounds/RadialGradientBlue.jpg")'
+      lovelace-background: 'center / cover no-repeat fixed url("https://cdn.jsdelivr.net/gh/tedr91/teds-themes@main/backgrounds/RadialGradientBlue.jpg")'
 
       # ── HA 2026.x primary color scale (Win11 default blue at -40) ──
       ha-color-primary-05: '#001D2E'
@@ -326,7 +329,7 @@ Windows 11:
       # ── Default dashboard wallpaper (Win11 radial blue gradient) ──
       # Same image as light mode — looks great over both palettes.
       # See the light-mode comment above for details on switching images.
-      lovelace-background: 'center / cover no-repeat fixed url("https://cdn.jsdelivr.net/gh/tedr91/ha-windows11-theme@main/backgrounds/RadialGradientBlue.jpg")'
+      lovelace-background: 'center / cover no-repeat fixed url("https://cdn.jsdelivr.net/gh/tedr91/teds-themes@main/backgrounds/RadialGradientBlue.jpg")'
 
       # ── HA 2026.x primary color scale (Win11 dark accent at -60) ──
       ha-color-primary-05: '#001D2E'
