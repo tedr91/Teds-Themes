@@ -1,6 +1,6 @@
 # Ted's Theme Collection for Home Assistant
 
-Five native Home Assistant themes that recreate the world's major UI design languages — **no add-ons required**. Each works on stock Home Assistant 2026.x, ships light + dark via `modes:` (so HA's **Auto** option follows your OS), and uses both the new HA 2026.x `--ha-color-*` token system and the legacy `--paper-*` / `--mdc-*` / `--primary-*` aliases for cross-version compatibility.
+Six native Home Assistant themes that recreate the world's major UI design languages — **no add-ons required**. Each works on stock Home Assistant 2026.x, ships light + dark via `modes:` (so HA's **Auto** option follows your OS), and uses both the new HA 2026.x `--ha-color-*` token system and the legacy `--paper-*` / `--mdc-*` / `--primary-*` aliases for cross-version compatibility.
 
 | Theme | Design language | Look | Accent (light / dark) |
 | --- | --- | --- | --- |
@@ -9,6 +9,7 @@ Five native Home Assistant themes that recreate the world's major UI design lang
 | **Apple macOS** | macOS 27 "Golden Gate" (Liquid Glass) | Glassy chrome, solid grouped cards, SF Pro, 16 px cards, capsule buttons | `#007AFF` / `#0A84FF` |
 | **Apple macOS - Glass** | macOS 27 "Golden Gate" (Liquid Glass) | Same as Apple macOS, but content cards are translucent frosted glass | `#007AFF` / `#0A84FF` |
 | **Google Material 3** | Material Design 3 / Material You | Tonal surfaces, Roboto / Google Sans, 12 px cards, 28 px dialogs, pill buttons | `#6750A4` / `#D0BCFF` |
+| **Google Material - Glass** | Material Design 3 / Material You | Same as Google Material 3, but content cards are translucent frosted glass | `#6750A4` / `#D0BCFF` |
 
 > **Note for existing users:** the Apple theme was renamed **Apple macOS 26 → Apple macOS** (and now has an **Apple macOS - Glass** variant); earlier, **Microsoft Windows UI → Microsoft Windows 11** and **Apple HIG → Apple macOS 26**. After updating, re-select your theme in your Profile (the old names will no longer appear).
 
@@ -37,6 +38,8 @@ The dashboards below are built with [**Ted's Cards**](https://github.com/tedr91/
 #### Google Material 3
 ![Google Material 3 theme — light and dark dashboards](images/theme-google-material-3.webp)
 
+> **Google Material - Glass** shares this look and the same wallpapers, but its content cards are translucent frosted glass instead of solid tonal surfaces.
+
 </details>
 
 > The card layouts above are visual mock-ups for illustration; install [Ted's Cards](https://github.com/tedr91/Teds-Cards) to use them in your own dashboards.
@@ -49,7 +52,7 @@ The dashboards below are built with [**Ted's Cards**](https://github.com/tedr91/
 
 1. HACS → ⋮ → **Custom repositories** → add this repo's URL with category **Theme**.
 2. Find **Ted's Theme Collection** in HACS → Themes, install, then restart Home Assistant.
-3. Open your **Profile** (bottom-left avatar) and pick one of **Microsoft Windows 11**, **Microsoft Fluent 2**, **Apple macOS**, **Apple macOS - Glass**, or **Google Material 3** as the theme. Set **Theme mode** to **Auto** to follow the OS.
+3. Open your **Profile** (bottom-left avatar) and pick one of **Microsoft Windows 11**, **Microsoft Fluent 2**, **Apple macOS**, **Apple macOS - Glass**, **Google Material 3**, or **Google Material - Glass** as the theme. Set **Theme mode** to **Auto** to follow the OS.
 
 ### Option 2 — Manual
 
@@ -59,6 +62,7 @@ The dashboards below are built with [**Ted's Cards**](https://github.com/tedr91/
    - [themes/apple-macos.yaml](themes/apple-macos.yaml) — Apple macOS
    - [themes/apple-macos-glass.yaml](themes/apple-macos-glass.yaml) — Apple macOS - Glass
    - [themes/google-material-3.yaml](themes/google-material-3.yaml) — Google Material 3
+   - [themes/google-material-glass.yaml](themes/google-material-glass.yaml) — Google Material - Glass
    - Create the `themes/` folder if it does not exist.
 2. Add the following to `configuration.yaml` (skip if you already have a `frontend:` block with `themes:`):
 
@@ -70,7 +74,7 @@ The dashboards below are built with [**Ted's Cards**](https://github.com/tedr91/
 3. Restart Home Assistant (**Developer Tools → YAML → Restart**, or full restart).
 4. Select your theme in your Profile as above.
 
-> **Tip:** Every theme ships its own **light + dark wallpaper**, enabled by default. The **Microsoft Windows 11** and **Apple macOS - Glass** themes use translucent cards, so their Mica/glass blur looks best over the wallpaper; **Apple macOS** uses translucent glass chrome (sidebar, header, menus) over solid content cards; **Microsoft Fluent 2** and **Google Material 3** keep solid, opaque cards on top. To go fully flat, set `lovelace-background` to a solid color (see Backgrounds below).
+> **Tip:** Every theme ships its own **light + dark wallpaper**, enabled by default. The **Microsoft Windows 11**, **Apple macOS - Glass**, and **Google Material - Glass** themes use translucent cards, so their Mica/glass blur looks best over the wallpaper; **Apple macOS** uses translucent glass chrome (sidebar, header, menus) over solid content cards; **Microsoft Fluent 2** and **Google Material 3** keep solid, opaque cards on top. To go fully flat, set `lovelace-background` to a solid color (see Backgrounds below).
 
 ---
 
@@ -78,7 +82,7 @@ The dashboards below are built with [**Ted's Cards**](https://github.com/tedr91/
 
 ### Dropdown row-action menus (translucent themes)
 
-This applies to the **Microsoft Windows 11**, **Apple macOS**, and **Apple macOS - Glass** themes, which use translucency. The **Microsoft Fluent 2** and **Google Material 3** themes are fully solid, so they are unaffected.
+This applies to the **Microsoft Windows 11**, **Apple macOS**, **Apple macOS - Glass**, and **Google Material - Glass** themes, which use translucency. The **Microsoft Fluent 2** and **Google Material 3** themes are fully solid, so they are unaffected.
 
 Cards, dialogs (more-info, settings popups, confirmations), bottom sheets, and adaptive popovers all get real `backdrop-filter` blur because HA exposes dedicated theme variables (`--ha-card-backdrop-filter`, `--ha-dialog-surface-backdrop-filter`).
 
@@ -98,6 +102,8 @@ Every theme ships its **own light + dark wallpaper**, enabled by default and mat
 | Microsoft Fluent 2 | [microsoft-fluent2/](backgrounds/microsoft-fluent2/) | neutral concrete | dark-grey brushstroke |
 | Apple macOS | [apple-macos/](backgrounds/apple-macos/) | pastel waves | 3D purple/blue wave |
 | Apple macOS - Glass | [apple-macos/](backgrounds/apple-macos/) | pastel waves | 3D purple/blue wave |
+| Google Material 3 | [google-material-3/](backgrounds/google-material-3/) | geometric shapes | tonal gradient |
+| Google Material - Glass | [google-material-3/](backgrounds/google-material-3/) | geometric shapes | tonal gradient |
 | Google Material 3 | [google-material-3/](backgrounds/google-material-3/) | geometric shapes | tonal gradient |
 
 A shared library of **7 Win11-style wallpapers** also ships in [backgrounds/general/](backgrounds/general/) for use with any theme.
@@ -167,7 +173,7 @@ views:
 
 ## Customizing the accent color
 
-Each theme ships with its design language's signature accent (**Microsoft Windows 11** `#0078D4`, **Microsoft Fluent 2** `#0F6CBD`, **Apple macOS** & **Apple macOS - Glass** `#007AFF`, **Google Material 3** `#6750A4`). To use a different accent, edit the relevant file in [themes/](themes/) — for example [themes/microsoft-windows-11.yaml](themes/microsoft-windows-11.yaml) — and change these in **both** the `light:` and `dark:` mode blocks:
+Each theme ships with its design language's signature accent (**Microsoft Windows 11** `#0078D4`, **Microsoft Fluent 2** `#0F6CBD`, **Apple macOS** & **Apple macOS - Glass** `#007AFF`, **Google Material 3** & **Google Material - Glass** `#6750A4`). To use a different accent, edit the relevant file in [themes/](themes/) — for example [themes/microsoft-windows-11.yaml](themes/microsoft-windows-11.yaml) — and change these in **both** the `light:` and `dark:` mode blocks:
 
 ```yaml
 ha-color-primary-40: '#0078D4'     # ← your accent (hex) — light mode default
@@ -202,13 +208,14 @@ Teds-Themes/
 │   ├── microsoft-fluent2.yaml      ← Microsoft Fluent 2 (flat, solid)
 │   ├── apple-macos.yaml            ← Apple macOS (Liquid Glass chrome)
 │   ├── apple-macos-glass.yaml      ← Apple macOS - Glass (Liquid Glass cards)
-│   └── google-material-3.yaml      ← Google Material 3 (tonal, Roboto)
+│   ├── google-material-3.yaml      ← Google Material 3 (tonal, Roboto)
+│   └── google-material-glass.yaml  ← Google Material - Glass (frosted-glass cards)
 ├── backgrounds/                    ← wallpapers (served via jsDelivr CDN)
 │   ├── general/                    ← 7 shared Win11-style wallpapers
 │   ├── microsoft-windows-11/       ← Windows 11 light + dark
 │   ├── microsoft-fluent2/          ← Fluent 2 light + dark
 │   ├── apple-macos/                ← Apple macOS (+ Glass) light + dark
-│   └── google-material-3/          ← Material 3 light + dark
+│   └── google-material-3/           ← Material 3 (+ Glass) light + dark
 ├── design-guides/                  ← Fluent 2, Apple HIG & Material 3 reference specs
 ├── README.md
 ├── LICENSE
@@ -221,7 +228,7 @@ Teds-Themes/
 
 - **Microsoft Windows 11** & **Microsoft Fluent 2** — color tokens & opacities derived from Microsoft's public **Fluent 2 / WinUI 3** design specifications.
 - **Apple macOS** & **Apple macOS - Glass** — color, type, and shape tokens derived from Apple's **Human Interface Guidelines** and the macOS 27 "Golden Gate" / Liquid Glass design language.
-- **Google Material 3** — color, type, and shape tokens derived from Google's public **Material Design 3 / Material You** baseline specifications.
+- **Google Material 3** & **Google Material - Glass** — color, type, and shape tokens derived from Google's public **Material Design 3 / Material You** baseline specifications.
 - Built for Home Assistant 2026.x (also compatible with earlier versions via legacy token aliases).
 
 ## License
